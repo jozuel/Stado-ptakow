@@ -2,10 +2,14 @@
 //
 
 #include "stdafx.h"
+#include <iostream>
+#include <cstdlib>
+#include <fstream>
 
-
+using namespace std;
 int main()
 {
+	cout << "hello world";
     return 0;
 }
 
