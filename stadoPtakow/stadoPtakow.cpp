@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <vector>
+#include <string>
 
 #define M_PI 3.14159265358979323846
 
@@ -62,7 +63,7 @@ private:
 	bool czywStadzie;
 	bool ucieczka;
 	double predkosc;
-	double zasiegWidzenia;
+	//double zasiegWidzenia;
 	orientacja zwrot;
 public:
 	Osobnik():Obiekt()
@@ -72,6 +73,7 @@ public:
 		ucieczka = false;
 		predkosc = 1;
 		zwrot = lewo;
+		Obiekt *najblizszyOsobnik;
 	}
 	Osobnik(bool glod, bool stado, bool uciekaj, double v, orientacja orient, double x, double y) : Obiekt(x, y)
 	{
@@ -105,6 +107,7 @@ public:
 	bool szukajStada(Obiekt *tab,double tangens[])
 	{
 		double a, b, c, tmp;		//boki trojkata a z poz X b z poz Y c przekatna
+		double minC;
 		for (int i = 0; i < ilosc; i++)	//while((znaleziono == "false")and (i<n))
 		{
 			if (wypiszTyp() == "Osobnik")		//sprawdzanie typu czy nie drapieznik i czy nie jedzenie
@@ -118,7 +121,7 @@ public:
 						{
 							tmp = pow(a, 2) + pow(b, 2);
 							c = sqrt(tmp);
-							if (c <= zasiegWidzenia)
+							//if (c <= )
 							{
 
 							}
@@ -193,6 +196,39 @@ void wypelnijTangens(double tab[], int n)		//oblicza tangens w stopniach
 		//cout <<i<<" " <<tab[i] << endl;
 	}
 }
+string* rozszezanieTablicy(string *tab, int rozmiar)
+{
+	string *newTab = new string[rozmiar + 1];
+	for (int i = 0; i < rozmiar; i++)
+	{
+		newTab[i] = tab[i];
+	}
+	delete[] tab;
+	return newTab;
+}
+void pobieraniezPliku()
+{
+	ifstream plik;
+	string *linie;
+	int iloscLini = 0;
+	linie = new string[1];
+	plik.open("stadoPtakow.txt");	//zmienic potem na parametr
+	if (plik)
+	{
+		while (!plik.eof())
+		{
+			iloscLini++;
+			linie=rozszezanieTablicy(linie, iloscLini - 1);
+			getline(plik, linie[iloscLini - 1]);	//pobiera cala linie
+			cout << linie[iloscLini-1]<<endl;
+		}
+		plik.close();
+	}
+	else
+	{
+		cout << "b³ad otwarcia pliku";
+	}
+}
 int main()
 {
 	
@@ -200,10 +236,12 @@ int main()
 	float maxY;
 	double stopnie[90];
 	int n = 90;
+	double zasiegWidzenia = 90;
 	Obiekt *obiekty;
 	obiekty = new Osobnik();
 	cout << obiekty[0].ilosc << endl;
 	wypelnijTangens(stopnie, n);
+	pobieraniezPliku();
 	getchar();
 	return 0;
 }
