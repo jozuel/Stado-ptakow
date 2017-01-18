@@ -57,6 +57,7 @@ public:
 	}
 };
 int Obiekt::ilosc = 0;
+//dodac przeciazony operator wypisywania
 class Osobnik : public Obiekt
 {
 private:
@@ -65,7 +66,7 @@ private:
 	bool ucieczka;
 	double predkosc;	///losowa
 	orientacja zwrot;
-	Obiekt *najblizszyOsobnik;
+	Obiekt *najblizszyObiekt=nullptr;	//przyda sie do obliczenia drogi
 public:
 	Osobnik():Obiekt()
 	{
@@ -107,73 +108,85 @@ public:
 	{
 		return "Osobnik";
 	}
-	bool sprawdzKatWidzenia(double tangens[],Obiekt *tab, double &a,double &b,double &c, int i )
+	//twozy trojkat ktorego przeciwprostokatna to odleglosc pomiedzy obiektami
+	void ustawZasiegObiektu(Obiekt* tab, double &a, double &b, double &c)
 	{
-		a = abs(getX() - tab[i].getX());		//zmienic by kozystalo z tablicy Obiektow
-		b = abs(getY() - tab[i].getY());
-		for (int j = 0; j < 90; j++)
-		{
-			if (((b / a) - tangens[j]) <=0.01 && ((b / a) - tangens[j]) >= -0.01)	//jesli jest w okolicach tego k¹ta
+		double tmp;
+		a = abs(getX() - tab->getX());		
+		b = abs(getY() - tab->getY());
+		tmp = pow(a, 2) + pow(b, 2);
+		c = sqrt(tmp);
+	}
+	bool sprawdzKatWidzenia(double tangens[],Obiekt* tab, double &a,double &b,double &c)
+	{
+		ustawZasiegObiektu(tab, a, b, c);
+		for (int j = 0; j < 89; j++)
+		{		//if (((b / a) - tangens[j]) <=0.01 && ((b / a) - tangens[j]) >= -0.01)
+			if(( (b/a) >= tangens[j]) && ((b/a) <= tangens[j+1]))	//jesli jest w okolicach k¹ta widzenia
 			{
-				return true;	//jest w kacie widzenia
+				return true;
+			}
+		}
+		return false;
+	}
+	//sprawdza czy znaleziony osobnik jest w zasiegu zwroku, kacie widzenia i czy nie jest dalej niz poprzednio znaleziony
+	void sprawdzenieObiektu(double tangens[], Obiekt* tab, double &a, double &b, double &c, double minC,double zasiegWidzenia)
+	{
+		if (sprawdzKatWidzenia(tangens, tab, a, b, c) == true)
+		{//jesli jest w zasiegu zwroku i najblizszy osobnik jest dalej
+			if ((c <= zasiegWidzenia) && ((najblizszyObiekt == nullptr) || (minC<c)))
+			{
+				najblizszyObiekt = tab;
 			}
 		}
 	}
-	bool szukajStada(Obiekt *tab,double tangens[])
+	//sprawdza wszystkie osobniki i sprawdza ktory jest najblizej
+	bool szukajStada(vector<Obiekt*> tab,double tangens[], double zasiegWidzenia,string szukanyTyp)
 	{
 		double a, b, c, tmp;		//boki trojkata a z poz X b z poz Y c przekatna
-		double minC;
-		for (int i = 0; i < ilosc; i++)	//while((znaleziono == "false")and (i<n))
+		double minC, minB, minA;
+		for (int i = 0; i < ilosc; i++)	
 		{
-			if (wypiszTyp() == "Osobnik")		//sprawdzanie typu czy nie drapieznik i czy nie jedzenie
+			if (najblizszyObiekt != nullptr)
 			{
-				switch (zwrot)
+				ustawZasiegObiektu(najblizszyObiekt, minA, minB, minC);
+			}
+			if (tab[i]->wypiszTyp() == szukanyTyp)		//sprawdzanie typu obiektu
+			{
+				switch (zwrot)	//w zaleznosci od kierunku patrzenia jest sprawdzana pozycja drugiego obiektu
 				{
 				case gora:
-					if (getY() < tab[i].getY())
+					if (getY() < tab[i]->getY())
 					{
-						if (sprawdzKatWidzenia(tangens, tab, a, b, c, i) == true)
-						{
-							tmp = pow(a, 2) + pow(b, 2);
-							c = sqrt(tmp);
-							//if (c <= )
-							{
-
-							}
-						}
-						
+						sprawdzenieObiektu(tangens, tab[i], a, b, c, minC, zasiegWidzenia);
 					}
 					break;
 				case dol:
-					if (getY() > tab[i].getY())
+					if (getY() > tab[i]->getY())
 					{
-						if (sprawdzKatWidzenia(tangens, tab, a, b, c, i) == true)
+						if (sprawdzKatWidzenia(tangens, tab[i], a, b, c) == true)
 						{
-
+							sprawdzenieObiektu(tangens, tab[i], a, b, c, minC, zasiegWidzenia);
 						}
 					}
-
-					//if posY>tab.posY
 					break;
 				case lewo:
-					if (getX() < tab[i].getX())
+					if (getX() < tab[i]->getX())
 					{
-						if (sprawdzKatWidzenia(tangens, tab, a, b, c, i) == true)
+						if (sprawdzKatWidzenia(tangens, tab[i], a, b, c) == true)
 						{
-
+							sprawdzenieObiektu(tangens, tab[i], a, b, c, minC, zasiegWidzenia);
 						}
 					}
-						//if posX<tab.posX
 					break;
 				case prawo:
-					if (getX() > tab[i].getX())
+					if (getX() > tab[i]->getX())
 					{
-						if (sprawdzKatWidzenia(tangens, tab, a, b, c, i) == true)
+						if (sprawdzKatWidzenia(tangens, tab[i], a, b, c) == true)
 						{
-
+							sprawdzenieObiektu(tangens, tab[i], a, b, c, minC, zasiegWidzenia);
 						}
 					}
-						//if posX>tab.posX
 					break;
 				default:
 					break;
@@ -181,10 +194,7 @@ public:
 			}
 		}
 	}
-	bool szukajJedzenia()
-	{
-
-	}
+	//bool szukajJedzenia()
 	void ominPrzeszkode()
 	{
 
@@ -193,10 +203,7 @@ public:
 	{
 
 	}
-	bool znajdzDrapieznika()
-	{
-
-	}
+	//bool znajdzDrapieznika()
 
 };
 Obiekt* utworzObiekt(double posX, double posY, char typObiektu)
@@ -225,7 +232,8 @@ Obiekt* utworzObiekt(double posX, double posY, char typObiektu)
 	}
 	catch (const std::exception&)
 	{
-		
+		cout << "bledny obiekt";
+		return nullptr;
 	}
 	
 }
@@ -252,16 +260,8 @@ T* rozszezanieTablicy(T *tab, int rozmiar)
 	delete[] tab;
 	return newTab;
 }
-//string* rozszezanieTablicy(string *tab, int rozmiar)
-//{
-//	string *newTab = new string[rozmiar + 1];
-//	for (int i = 0; i < rozmiar; i++)
-//	{
-//		newTab[i] = tab[i];
-//	}
-//	delete[] tab;
-//	return newTab;
-//}
+
+//pomyslec nad obsluga bledow
 void ustawienieObiektow(string *&linie, int iloscLini,vector<Obiekt*> &obiekty)
 {
 	double posX, posY;	
@@ -279,13 +279,12 @@ void ustawienieObiektow(string *&linie, int iloscLini,vector<Obiekt*> &obiekty)
 			{
 				liczba += linie[i].at(j);
 			}
-			else if (linie[i][j] == ',')
+			else if (linie[i][j] == ',')// 1 liczba
 			{
-				//znalezionoPrzecinek = true;	//czy potrzebna jest zmienna znalezionoPrzecinek?
 				posX = stod(liczba);	//stod(string) do zmiany stringa na liczbe
 				liczba = "";
 			}
-			else if(linie[i][j] == ')')	//mamy 2 liczbe
+			else if(linie[i][j] == ')')	// 2 liczba
 			{
 				posY = stod(liczba);
 				liczba = "";
@@ -295,7 +294,6 @@ void ustawienieObiektow(string *&linie, int iloscLini,vector<Obiekt*> &obiekty)
 				//obiekty[iloscObiektow] = tmp;
 				//utworzObiekt(posX,posY,typObiektu);
 				//cout << " " << posX << " " << posY << endl;		//dziala nawet dla liczb zmiennoprzecinkowych
-				//znalezionoPrzecinek = false;
 			}
 
 		}
@@ -330,7 +328,6 @@ void pobieraniezPliku(string *&linie,int &iloscLini)
 }
 int main()
 {
-	
 	float maxX;
 	float maxY;
 	double stopnie[90];
@@ -341,27 +338,24 @@ int main()
 	//parametry startowe z lini polecen
 		string plikWejsciowy;
 		double zasiegWidzenia = 90;
-		int katWidzenia;	//od 0 do 90
-		float rozmiarOsobnika;
-		char trybPracy;
+		int katWidzenia=45;	//od 0 do 90
+		float rozmiarOsobnika=1;
+		char trybPracy='k';
 		string plikWyjsciowy;
 	//end parametry
-	//Obiekt *obiekty;
-	//obiekty = new Osobnik[1]();
-		listaObiektow.push_back(new Osobnik());
-		//cout<<listaObiektow[0]->getX();
-		
-	//cout << listaObiektow[0].ilosc << endl;
+
 	wypelnijTangens(stopnie, 90);
 	pobieraniezPliku(linieTekstu,iloscLini);
 	ustawienieObiektow(linieTekstu, iloscLini, listaObiektow);	//nie zapomniec o zwolnieniu pamieci
+	//zwolnienie pamieci
 	for (int i = 0; i < listaObiektow.size(); i++)
 	{
 		cout << listaObiektow[i]->getX() << " " << listaObiektow[i]->getY() << endl;		//ok dziala vector
 		delete listaObiektow[i];
 	}
 	listaObiektow.clear();
-	//delete listaObiektow[0];
+	delete[] linieTekstu;
+
 	getchar();
 	return 0;
 }
