@@ -64,25 +64,28 @@ private:
 	bool czyGlodny;
 	bool czywStadzie;
 	bool ucieczka;
-	double predkosc;	///losowa
+	double predkoscX;	///losowa
+	double predkoscY;
 	orientacja zwrot;
-	Obiekt *najblizszyObiekt=nullptr;	//przyda sie do obliczenia drogi
+	Obiekt *najblizszyObiekt=nullptr;	//przyda sie do obliczenia drogi i do sprawdzania najblizszego obiektu
 public:
 	Osobnik():Obiekt()
 	{
 		czyGlodny = false;
 		czywStadzie = false;
 		ucieczka = false;
-		predkosc = 1;
+		predkoscX = 1;
+		predkoscY = 1;
 		zwrot = lewo;
 		
 	}
-	Osobnik(bool glod, bool stado, bool uciekaj, double v, orientacja orient, double x, double y) : Obiekt(x, y)
+	Osobnik(bool glod, bool stado, bool uciekaj, double vx,double vy, orientacja orient, double x, double y) : Obiekt(x, y)
 	{
 		czyGlodny = glod;
 		czywStadzie = stado;
 		ucieczka = uciekaj;
-		predkosc = v;
+		predkoscX = vx;
+		predkoscY = vy;
 		zwrot = orient;
 	}
 	Osobnik(double x, double y) : Obiekt(x, y)	//podstawowe losowanie parametrów przy pobieranu danych z pliku
@@ -95,14 +98,20 @@ public:
 		ucieczka = false;
 		losowo = rand() % 4;
 		zwrot = orientacja(losowo);
-		losowo = rand() % 800 + 100; //prêdkoœæ przelotowa jaskó³ki to 32km/h czyli okolo 8,8 m/s
+		losowo = rand() % 1600 - 800; //prêdkoœæ przelotowa jaskó³ki to 32km/h czyli okolo 8,8 m/s
 		losowo /= 100;
-		predkosc = losowo;
-
+		predkoscX = losowo;
+		losowo = rand() % 1600 - 800; //prêdkoœæ przelotowa jaskó³ki to 32km/h czyli okolo 8,8 m/s
+		losowo /= 100;
+		predkoscY = losowo;
 	}
 	~Osobnik()
 	{
 
+	}
+	Obiekt* getNajblizszyObiekt()
+	{
+		return najblizszyObiekt;
 	}
 	string wypiszTyp()
 	{
@@ -141,10 +150,11 @@ public:
 		}
 	}
 	//sprawdza wszystkie osobniki i sprawdza ktory jest najblizej
-	bool szukajStada(vector<Obiekt*> tab,double tangens[], double zasiegWidzenia,string szukanyTyp)
+	void szukajObiektu(vector<Obiekt*> tab,double tangens[], double zasiegWidzenia,string szukanyTyp)
 	{
+		najblizszyObiekt = nullptr;	//bedzie wiadomo czy cos znalazlo
 		double a, b, c, tmp;		//boki trojkata a z poz X b z poz Y c przekatna
-		double minC, minB, minA;
+		double minC = 0 , minB, minA;
 		for (int i = 0; i < ilosc; i++)	
 		{
 			if (najblizszyObiekt != nullptr)
@@ -195,9 +205,87 @@ public:
 		}
 	}
 	//bool szukajJedzenia()
+	void sprawdzanieKolizji(double rozmiarObiektu,vector<Obiekt*>tab, string typObiektu)
+	{
+		double pokrycieX, pokrycieY;
+		bool kolizja;
+		do		//bez tego moglo by sie okazac ze po przesunieciu wystepuje inna kolizja
+		{
+			kolizja = false;
+			for (int i = 0; i < tab.size; i++)
+			{
+				if (tab[i]->wypiszTyp == typObiektu)
+				{
+					pokrycieX = abs(tab[i]->getX() - getX());	//ró¿nica na osi X
+					pokrycieY = abs(tab[i]->getY() - getY());	//ró¿nica na osi Y
+					pokrycieX -= rozmiarObiektu;		//sprawdza czy sie nakladaja
+					pokrycieY -= rozmiarObiektu;
+					if ((pokrycieX < rozmiarObiektu) && (pokrycieY < rozmiarObiektu))
+					{
+						kolizja = true;
+					}
+				}
+			}
+			if (kolizja == true)	//mysle by to dac poza petla
+			{
+				if (getX() - 0.5 > 0)
+				{
+					setX(getX() - 0.5);//przesuwa obiekt w lewo
+				}
+				else
+				{
+					setX(getX() + 0.5);//przesuwa obiekt w prawo
+				}
+			}
+		} while (kolizja == false);
+	}
+	void poruszanie()
+	{
+		switch (zwrot)
+		{
+		case gora:
+			setX(getX()+predkoscX);
+			setY(getY() + abs(predkoscY));		//y sie zwieksza
+			break;
+		case dol:
+			setX(getX() + predkoscX);
+			if (getY() - abs(predkoscY) > 0)
+				setY(getY() - abs(predkoscY));		//y sie zmniejsza
+			else
+				setY(0.0);
+			break;
+		case lewo:
+			if (getX() - abs(predkoscX) > 0)
+				setX(getX() - abs(predkoscX));	//x sie zmiejsza
+			else
+				setX(0.0);
+			setY(getY() + predkoscY);
+			break;
+		case prawo:
+			setX(getX() + abs(predkoscX));	//x sie zwieksza
+			setY(getY() + predkoscY);
+			break;
+		default:
+			break;
+		}
+		/*setX(predkoscX);
+		setY(predkoscY);*/
+	}
 	void ominPrzeszkode()
 	{
-
+		switch (zwrot)
+		{
+		case gora:
+			break;
+		case dol:
+			break;
+		case lewo:
+			break;
+		case prawo:
+			break;
+		default:
+			break;
+		}
 	}
 	void uciekaj() 
 	{
@@ -339,14 +427,26 @@ int main()
 		string plikWejsciowy;
 		double zasiegWidzenia = 90;
 		int katWidzenia=45;	//od 0 do 90
-		float rozmiarOsobnika=1;
+		double rozmiarOsobnika=1;
 		char trybPracy='k';
 		string plikWyjsciowy;
 	//end parametry
-
+		Osobnik* cos;
 	wypelnijTangens(stopnie, 90);
 	pobieraniezPliku(linieTekstu,iloscLini);
 	ustawienieObiektow(linieTekstu, iloscLini, listaObiektow);	//nie zapomniec o zwolnieniu pamieci
+
+	dynamic_cast<Osobnik*>(listaObiektow[2])->szukajObiektu(listaObiektow, stopnie, zasiegWidzenia, "Osobnik");		//test
+	//cos->szukajObiektu(listaObiektow, stopnie, zasiegWidzenia, "Osobnik");		//.szukajStada();
+
+
+	/* if(cos->czyglodny ==true)
+	{
+		szukajObiektu("Jedzenie")
+		
+	}
+	
+	*/
 	//zwolnienie pamieci
 	for (int i = 0; i < listaObiektow.size(); i++)
 	{
