@@ -1,0 +1,27 @@
+cykl 7
+Osobnik (0,45)
+
+Osobnik (7,45)
+
+Osobnik (16.5832,27.0838)
+
+Osobnik (19.4412,27.794)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (42,90.12)
+
+Osobnik (5,55)
+
+Osobnik (107.1,45)
+
+Osobnik (112,50)
+
+Osobnik (113,60)
+

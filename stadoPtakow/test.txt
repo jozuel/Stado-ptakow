@@ -1,0 +1,269 @@
+Osobnik (3.5,6)
+
+Osobnik (15,5.08663)
+
+Osobnik (20,10.1162)
+
+Osobnik (21,21)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,51.12)
+
+Osobnik (13,15.1)
+
+Osobnik (115.1,6)
+
+Osobnik (120,11)
+
+Osobnik (121,21)
+
+cykl 1
+Osobnik (3.5,6.07602)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,22)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,52.12)
+
+Osobnik (13,15.1009)
+
+Osobnik (115.1,7)
+
+Osobnik (120,12)
+
+Osobnik (121,22)
+
+cykl 2
+Osobnik (3.5,6.07646)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,23)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,53.12)
+
+Osobnik (13,15.1019)
+
+Osobnik (115.1,8)
+
+Osobnik (120,13)
+
+Osobnik (121,23)
+
+cykl 3
+Osobnik (3.5,6.07646)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,24)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,54.12)
+
+Osobnik (13,15.1028)
+
+Osobnik (115.1,9)
+
+Osobnik (120,14)
+
+Osobnik (121,24)
+
+cykl 4
+Osobnik (3.5,6.07646)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,25)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,55.12)
+
+Osobnik (13,15.1038)
+
+Osobnik (115.1,10)
+
+Osobnik (120,15)
+
+Osobnik (121,25)
+
+cykl 5
+Osobnik (3.5,6.07646)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,26)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,56.12)
+
+Osobnik (13,15.1047)
+
+Osobnik (115.1,11)
+
+Osobnik (120,16)
+
+Osobnik (121,26)
+
+cykl 6
+Osobnik (3.5,6.07646)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,27)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,57.12)
+
+Osobnik (13,15.1057)
+
+Osobnik (115.1,12)
+
+Osobnik (120,17)
+
+Osobnik (121,27)
+
+cykl 7
+Osobnik (3.5,6.07646)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,28)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,58.12)
+
+Osobnik (13,15.1066)
+
+Osobnik (115.1,13)
+
+Osobnik (120,18)
+
+Osobnik (121,28)
+
+cykl 8
+Osobnik (3.5,6.07646)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,29)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,59.12)
+
+Osobnik (13,15.1076)
+
+Osobnik (115.1,14)
+
+Osobnik (120,19)
+
+Osobnik (121,29)
+
+cykl 9
+Osobnik (3.5,6.07646)
+
+Osobnik (15,5.08728)
+
+Osobnik (20,10.1178)
+
+Osobnik (21,30)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (50,60.12)
+
+Osobnik (13,15.1085)
+
+Osobnik (115.1,15)
+
+Osobnik (120,20)
+
+Osobnik (121,30)
+

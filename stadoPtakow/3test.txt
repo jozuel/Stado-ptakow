@@ -1,0 +1,27 @@
+cykl 3
+Osobnik (0,25)
+
+Osobnik (11,25)
+
+Osobnik (16.6339,26.8304)
+
+Osobnik (19.4412,27.794)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (46,70.12)
+
+Osobnik (9,35)
+
+Osobnik (111.1,25)
+
+Osobnik (116,30)
+
+Osobnik (117,40)
+

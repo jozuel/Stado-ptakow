@@ -1,0 +1,27 @@
+cykl 9
+Osobnik (0,55)
+
+Osobnik (5,55)
+
+Osobnik (16.5832,27.0838)
+
+Osobnik (19.4412,27.794)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (40,100.12)
+
+Osobnik (3,65)
+
+Osobnik (105.1,55)
+
+Osobnik (110,60)
+
+Osobnik (111,70)
+

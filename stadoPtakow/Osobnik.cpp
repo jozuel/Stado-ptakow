@@ -20,37 +20,17 @@ Osobnik::Osobnik(double x, double y) : Ptak(x, y)
 Osobnik::~Osobnik()
 {
 }
-void Osobnik::poruszanie()
+bool Osobnik::getCzyGlodny()
 {
-	switch (zwrot)
-	{
-	case gora:
-		setX(getX() + predkoscX);
-		setY(getY() + abs(predkoscY));		//y sie zwieksza
-		break;
-	case dol:
-		setX(getX() + predkoscX);
-		if (getY() - abs(predkoscY) > 0)
-			setY(getY() - abs(predkoscY));		//y sie zmniejsza
-		else		//obiekt przechodzi przez horyzont zdazen i z perspektywy obserwujacego stoi w miejscu
-			setY(0.0);
-		break;
-	case lewo:
-		if (getX() - abs(predkoscX) > 0)
-			setX(getX() - abs(predkoscX));	//x sie zmiejsza
-		else
-			setX(0.0);
-		setY(getY() + predkoscY);
-		break;
-	case prawo:
-		setX(getX() + abs(predkoscX));	//x sie zwieksza
-		setY(getY() + predkoscY);
-		break;
-	default:
-		break;
-	}
-	/*setX(predkoscX);
-	setY(predkoscY);*/
+	return czyGlodny;
+}
+void Osobnik::setCzyGlodny(bool x)
+{
+	czyGlodny = x;
+}
+bool Osobnik::getCzywStadzie()
+{
+	return czywStadzie;
 }
 void Osobnik::uciekaj()
 {
@@ -75,4 +55,46 @@ void Osobnik::uciekaj()
 std::string Osobnik::wypiszTyp()
 {
 	return "Osobnik";
+}
+void Osobnik::setCzywStadzie(bool stado)
+{
+	czywStadzie = stado;
+}
+void Osobnik::poruszanieDoObiektu(Obiekt* innyObiekt, double rozmiarOsobnika)
+{
+	double a, b, c;
+	double vx, vy, vz;
+	double stopienPodobienstwa, tmp;
+	ustawZasiegObiektu(innyObiekt, a, b, c);
+	vx = dynamic_cast<Ptak*>(this)->getPredkoscX();
+	vy = dynamic_cast<Ptak*>(this)->getPredkoscY();
+	tmp = pow(vx, 2) + pow(vy, 2);
+	vz = sqrt(tmp);
+	if (abs(c - vz) > (5 + rozmiarOsobnika))	//jesli odleglosc jest wieksza od 5 + rozmiar
+	{
+		stopienPodobienstwa = c / vz;
+		vx /= stopienPodobienstwa;
+		vy /= stopienPodobienstwa;
+		dynamic_cast<Ptak*>(this)->setPredkoscX(vx);
+		dynamic_cast<Ptak*>(this)->setPredkoscY(vy);
+	}
+	else
+	{	//dostosowuje predkosc do 2 osobnika w stadzie
+		if (innyObiekt->wypiszTyp() == "Osobnik")
+		{
+			dynamic_cast<Ptak*>(this)->setPredkoscX(dynamic_cast<Ptak*>(innyObiekt)->getPredkoscX());
+			dynamic_cast<Ptak*>(this)->setPredkoscY( dynamic_cast<Ptak*>(innyObiekt)->getPredkoscY());
+			dynamic_cast<Ptak*>(this)->setZwrot( dynamic_cast<Ptak*>(innyObiekt)->getZwrot());
+			dynamic_cast<Osobnik*>(this)->setCzywStadzie(true);
+			dynamic_cast<Osobnik*>(innyObiekt)->setCzywStadzie(true);
+		}
+		else if ((innyObiekt->wypiszTyp() == "Jedzenie") && (dynamic_cast<Osobnik*>(this)->czyGlodny == true))
+		{		//jesli jest w zasiegu jedzenia to ma go ustawic na tym polu
+			dynamic_cast<Ptak*>(this)->setX(dynamic_cast<Obiekt*>(innyObiekt)->getX());
+			dynamic_cast<Ptak*>(this)->setY(dynamic_cast<Obiekt*>(innyObiekt)->getY());
+			//przydalo by sie usunac obiekt
+			dynamic_cast<Obiekt*>(innyObiekt)->setX(0);
+			dynamic_cast<Obiekt*>(innyObiekt)->setY(0);
+		}
+	}
 }

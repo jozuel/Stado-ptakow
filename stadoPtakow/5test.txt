@@ -1,0 +1,27 @@
+cykl 5
+Osobnik (0,35)
+
+Osobnik (9,35)
+
+Osobnik (16.5832,27.0838)
+
+Osobnik (19.4412,27.794)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (44,80.12)
+
+Osobnik (7,45)
+
+Osobnik (109.1,35)
+
+Osobnik (114,40)
+
+Osobnik (115,50)
+

@@ -11,8 +11,13 @@ public:
 	Osobnik();
 	Osobnik(double x, double y);
 	~Osobnik();
-	void poruszanie();
+	bool getCzyGlodny();
+	void setCzyGlodny(bool x);
+	//void poruszanie();
 	void uciekaj();
 	std::string wypiszTyp();
+	void setCzywStadzie(bool stado);
+	bool getCzywStadzie();
+	void poruszanieDoObiektu( Obiekt* innyObiekt, double rozmiarOsobnika);
 };
 

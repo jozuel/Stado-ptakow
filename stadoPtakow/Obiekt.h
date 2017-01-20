@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 enum orientacja { gora, dol, lewo, prawo };
 class Obiekt
 {
@@ -17,6 +18,7 @@ public:
 	friend std::ostream& operator<< (std::ostream& out, Obiekt* &obiekt);
 	Obiekt();
 	Obiekt(double x, double y);
+	bool sprawdzanieKolizji(double rozmiarObiektu, std::vector<Obiekt*>&tab, std::string typObiektu);
 	~Obiekt();
 };
 

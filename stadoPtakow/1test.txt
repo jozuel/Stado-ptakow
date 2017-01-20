@@ -1,0 +1,27 @@
+cykl 1
+Osobnik (1.5,15)
+
+Osobnik (13,15)
+
+Osobnik (18,20)
+
+Osobnik (19.5439,27.2804)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (48,60.12)
+
+Osobnik (11,25)
+
+Osobnik (113.1,15)
+
+Osobnik (118,20)
+
+Osobnik (119,30)
+

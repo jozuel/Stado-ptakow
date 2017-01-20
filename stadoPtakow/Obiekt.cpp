@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Obiekt.h"
-
+//#include <vector>
 Obiekt::Obiekt()
 {
 	posX = 1;
@@ -40,4 +40,23 @@ std::ostream& operator<< (std::ostream &out,  Obiekt * &obiekt)
 	out << "("<<obiekt->getX()<<","<<obiekt->getY()<< ")";
 
 	return out;
+}
+bool Obiekt::sprawdzanieKolizji(double rozmiarObiektu, std::vector<Obiekt*>&tab, std::string typObiektu = "Dowolny")
+{
+	double pokrycieX, pokrycieY;
+	for (int i = 0; i < tab.size(); i++)
+	{
+		if ((tab[i]->wypiszTyp() == typObiektu) || typObiektu == "Dowolny")
+		{
+			pokrycieX = abs(tab[i]->getX() - getX());	//ró¿nica na osi X
+			pokrycieY = abs(tab[i]->getY() - getY());	//ró¿nica na osi Y
+			pokrycieX -= rozmiarObiektu;		//sprawdza czy sie nakladaja
+			pokrycieY -= rozmiarObiektu;
+			if ((pokrycieX < rozmiarObiektu) && (pokrycieY < rozmiarObiektu))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }

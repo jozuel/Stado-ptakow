@@ -21,6 +21,15 @@ Ptak::Ptak(double x, double y) :Obiekt(x, y)
 	losowo /= 100;
 	predkoscY = losowo;
 }
+Ptak::Ptak(double x, double y, double vx, double vy) :Obiekt(x, y)
+{
+	int losowo;
+	srand(time(NULL));
+	losowo = rand() % 4;
+	zwrot = orientacja(losowo);
+	predkoscX = vx;
+	predkoscY = vy;
+}
 Ptak::~Ptak()
 {
 }
@@ -39,6 +48,30 @@ void Ptak::ustawZasiegObiektu(Obiekt* tab, double &a, double &b, double &c)
 	b = abs(getY() - tab->getY());
 	tmp = pow(a, 2) + pow(b, 2);
 	c = sqrt(tmp);
+}
+void Ptak::setZwrot(orientacja x)
+{
+	zwrot = x;
+}
+orientacja Ptak::getZwrot()
+{
+	return zwrot;
+}
+double Ptak::getPredkoscX()
+{
+	return predkoscX;
+}
+double Ptak::getPredkoscY()
+{
+	return predkoscY;
+}
+void Ptak::setPredkoscX(double x)
+{
+	predkoscX = x;
+}
+void Ptak::setPredkoscY(double y)
+{
+	predkoscY = y;
 }
 bool Ptak::sprawdzKatWidzenia(double tangens[], Obiekt* tab, double &a, double &b, double &c)
 {
@@ -116,24 +149,37 @@ void Ptak::szukajObiektu(std::vector<Obiekt*> tab, double tangens[], double zasi
 		}
 	}
 }
-bool Ptak::sprawdzanieKolizji(double rozmiarObiektu, std::vector<Obiekt*>&tab, std::string typObiektu = "Dowolny")
+void Ptak::poruszanie()
 {
-	double pokrycieX, pokrycieY;
-	for (int i = 0; i < tab.size(); i++)
+	switch (zwrot)
 	{
-		if ((tab[i]->wypiszTyp() == typObiektu) || typObiektu == "Dowolny")
-		{
-			pokrycieX = abs(tab[i]->getX() - getX());	//ró¿nica na osi X
-			pokrycieY = abs(tab[i]->getY() - getY());	//ró¿nica na osi Y
-			pokrycieX -= rozmiarObiektu;		//sprawdza czy sie nakladaja
-			pokrycieY -= rozmiarObiektu;
-			if ((pokrycieX < rozmiarObiektu) && (pokrycieY < rozmiarObiektu))
-			{
-				return true;
-			}
-		}
+	case gora:
+		setX(getX() + predkoscX);
+		setY(getY() + abs(predkoscY));		//y sie zwieksza
+		break;
+	case dol:
+		setX(getX() + predkoscX);
+		if (getY() - abs(predkoscY) > 0)
+			setY(getY() - abs(predkoscY));		//y sie zmniejsza
+		else		//obiekt przechodzi przez horyzont zdazen i z perspektywy obserwujacego stoi w miejscu
+			setY(0.0);
+		break;
+	case lewo:
+		if (getX() - abs(predkoscX) > 0)
+			setX(getX() - abs(predkoscX));	//x sie zmiejsza
+		else
+			setX(0.0);
+		setY(getY() + predkoscY);
+		break;
+	case prawo:
+		setX(getX() + abs(predkoscX));	//x sie zwieksza
+		setY(getY() + predkoscY);
+		break;
+	default:
+		break;
 	}
-	return false;
+	/*setX(predkoscX);
+	setY(predkoscY);*/
 }
 void Ptak::ominPrzeszkode(double rozmiarObiektu, std::vector<Obiekt*>tab, std::string typObiektu = "Dowolny")
 {
@@ -154,3 +200,32 @@ void Ptak::ominPrzeszkode(double rozmiarObiektu, std::vector<Obiekt*>tab, std::s
 		}
 	} while (kolizja == true);
 }
+//void Ptak::poruszanieDoObiektu(Obiekt* &obiektPoruszany, Obiekt* innyObiekt,double rozmiarOsobnika)
+//{
+//	double a, b, c;
+//	double vx, vy, vz;
+//	double stopienPodobienstwa, tmp;
+//	ustawZasiegObiektu(innyObiekt, a, b, c);
+//	vx = dynamic_cast<Ptak*>(obiektPoruszany)->predkoscX;
+//	vy = dynamic_cast<Ptak*>(obiektPoruszany)->predkoscY;
+//	tmp = pow(vx, 2) + pow(vy, 2);
+//	vz = sqrt(tmp);
+//	if (abs(c - vz) > (5 + rozmiarOsobnika))	//jesli odleglosc jest wieksza od 5 + rozmiar
+//	{
+//		stopienPodobienstwa = c / vz;
+//		vx /= stopienPodobienstwa;
+//		vy /= stopienPodobienstwa;
+//		dynamic_cast<Ptak*>(obiektPoruszany)->predkoscX = vx;
+//		dynamic_cast<Ptak*>(obiektPoruszany)->predkoscY = vy;
+//	}
+//	else
+//	{	//dostosowuje predkosc do 2 osobnika w stadzie
+//		if (innyObiekt->wypiszTyp() == "Osobnik")
+//		{
+//			dynamic_cast<Ptak*>(obiektPoruszany)->predkoscX = dynamic_cast<Ptak*>(innyObiekt)->predkoscX;
+//			dynamic_cast<Ptak*>(obiektPoruszany)->predkoscY = dynamic_cast<Ptak*>(innyObiekt)->predkoscY;
+//			dynamic_cast<Ptak*>(obiektPoruszany)->zwrot = dynamic_cast<Ptak*>(innyObiekt)->zwrot;
+//			dynamic_cast<Osobnik*>(obiektPoruszany)->
+//		}
+//	}
+//}

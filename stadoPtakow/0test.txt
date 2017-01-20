@@ -1,0 +1,26 @@
+Osobnik (2.5,10)
+
+Osobnik (14,10)
+
+Osobnik (19,15)
+
+Osobnik (20,25)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (49,55.12)
+
+Osobnik (12,20)
+
+Osobnik (114.1,10)
+
+Osobnik (119,15)
+
+Osobnik (120,25)
+

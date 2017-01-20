@@ -148,6 +148,7 @@
     <ClInclude Include="Drapieznik.h" />
     <ClInclude Include="Jedzenie.h" />
     <ClInclude Include="Obiekt.h" />
+    <ClInclude Include="ObslugaIO.h" />
     <ClInclude Include="Osobnik.h" />
     <ClInclude Include="Ptak.h" />
     <ClInclude Include="stdafx.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Drapieznik.cpp" />
     <ClCompile Include="Jedzenie.cpp" />
     <ClCompile Include="Obiekt.cpp" />
+    <ClCompile Include="ObslugaIO.cpp" />
     <ClCompile Include="Osobnik.cpp" />
     <ClCompile Include="Ptak.cpp" />
     <ClCompile Include="stadoPtakow.cpp" />

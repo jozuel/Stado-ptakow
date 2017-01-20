@@ -13,6 +13,13 @@ public:
 	Ptak();
 	~Ptak();
 	Ptak(double x, double y);
+	Ptak(double x, double y, double vx, double vy);
+	void setZwrot(orientacja x);
+	orientacja getZwrot();
+	double getPredkoscX();
+	double getPredkoscY();
+	void setPredkoscX(double x);
+	void setPredkoscY(double y);
 	Obiekt* getNajblizszyObiekt();
 	std::string wypiszTyp();
 	//twozy trojkat ktorego przeciwprostokatna to odleglosc pomiedzy obiektami
@@ -26,7 +33,10 @@ public:
 	//sprawdza wszystkie osobniki i sprawdza ktory jest najblizej
 	void szukajObiektu(std::vector<Obiekt*> tab, double tangens[], double zasiegWidzenia,std::string szukanyTyp);
 
-	bool sprawdzanieKolizji(double rozmiarObiektu, std::vector<Obiekt*>&tab, std::string typObiektu);
+	
 	void ominPrzeszkode(double rozmiarObiektu, std::vector<Obiekt*>tab, std::string typObiektu);
+	void poruszanie();
+	//za pomoca podobienstwa trojkatow ustawia wektory przemieszczenia
+	//void poruszanieDoObiektu(Obiekt* &obiektPoruszany, Obiekt* innyObiekt, double rozmiarOsobnika);
 };
 

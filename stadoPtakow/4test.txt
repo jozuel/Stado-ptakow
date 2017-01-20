@@ -1,0 +1,27 @@
+cykl 4
+Osobnik (0,30)
+
+Osobnik (10,30)
+
+Osobnik (16.5842,27.0792)
+
+Osobnik (19.4412,27.794)
+
+Jedzenie (2,2)
+
+Jedzenie (3,3)
+
+Jedzenie (30,30)
+
+Jedzenie (100,100)
+
+Drapieznik (45,75.12)
+
+Osobnik (8,40)
+
+Osobnik (110.1,30)
+
+Osobnik (115,35)
+
+Osobnik (116,45)
+
