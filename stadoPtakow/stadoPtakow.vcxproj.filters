@@ -24,12 +24,42 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Ptak.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Obiekt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Osobnik.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Drapieznik.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jedzenie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stadoPtakow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ptak.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Obiekt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Osobnik.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Drapieznik.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jedzenie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
